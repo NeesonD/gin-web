@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"gin-web/api"
 	v1 "gin-web/api/v1"
 	"gin-web/pkg/setting"
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,12 @@ func InitRouter() *gin.Engine {
 
 	gin.SetMode(setting.RunMode)
 
+	r.GET("/auth", api.GetAuth)
+
 	apiV1 := r.Group("api/v1")
+
+	// 加过滤器
+	//apiV1.Use(jwt.JWT())
 
 	{
 		apiV1.GET("/tags", v1.GetTags)
