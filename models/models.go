@@ -5,6 +5,8 @@ import (
 	"gin-web/pkg/setting"
 	"github.com/jinzhu/gorm"
 	"log"
+
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var db *gorm.DB
@@ -33,7 +35,7 @@ func init() {
 	host = sec.Key("HOST").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
 
-	db, err := gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName))
+	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName))
 	if err != nil {
 		log.Println(err)
 	}
@@ -48,6 +50,6 @@ func init() {
 	db.DB().SetMaxOpenConns(100)
 }
 
-func CloseDB()  {
+func CloseDB() {
 	defer db.Close()
 }
